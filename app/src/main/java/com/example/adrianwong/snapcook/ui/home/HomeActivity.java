@@ -3,8 +3,6 @@ package com.example.adrianwong.snapcook.ui.home;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import com.example.adrianwong.snapcook.R;
@@ -18,8 +16,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
 
     private HomePresenter homePresenter;
     @BindView(R.id.snap_button) Button snapButton;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
