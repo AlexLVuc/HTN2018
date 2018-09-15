@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Snapcook</string>
     <string name="snap">SNAP</string>
-    <string name="take_picture">TAKE PICTURE</string>
+    <string name="search_recipes">SEARCH RECIPES</string>
 </resources>
