@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "799329323426",
+    "firebase_url": "https://hack-the-north-2018-bbc41.firebaseio.com",
+    "project_id": "hack-the-north-2018-bbc41",
+    "storage_bucket": "hack-the-north-2018-bbc41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799329323426:android:a1442e09799a2c00",
+        "android_client_info": {
+          "package_name": "com.example.adrianwong.snapcook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799329323426-bghuue1srpgbom2hi8t8qj7er00jces1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT48W_fl2uTQOtiyLhmAEOVFTTZvP-KDc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
