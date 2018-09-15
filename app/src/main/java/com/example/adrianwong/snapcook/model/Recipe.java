@@ -1,7 +1,6 @@
 package com.example.adrianwong.snapcook.model;
 
 import com.squareup.moshi.Json;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +25,5 @@ public class Recipe {
 
     @Json(name = "likes")
     private int likes;
+
 }
