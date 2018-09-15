@@ -43,6 +43,12 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
                 .setCompression(75)//6
                 .build(this);
 
+        try {
+            camera.takePicture();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         ButterKnife.bind(this);
 
     }
