@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.example.adrianwong.snapcook.MyApplication;
 import com.example.adrianwong.snapcook.R;
@@ -39,6 +40,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
         ButterKnife.bind(this);
         MyApplication.getApp().getAppComponent().inject(this);
 
+        recipeAdapter = new RecipeAdapter(this);
         recipePresenter.attachView(this);
 
         Intent intent = getIntent();
@@ -56,6 +58,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
     private void setupGui() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Available Recipes");
+        toolbar.setVisibility(View.VISIBLE);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
