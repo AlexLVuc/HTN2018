@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.adrianwong.snapcook.MyApplication;
 import com.example.adrianwong.snapcook.R;
 import com.mindorks.paracamera.Camera;
 
@@ -31,6 +32,8 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        ButterKnife.bind(this);
+        MyApplication.getApp().getAppComponent().inject(this);
 
         cameraPresenter = new CameraPresenter();
 

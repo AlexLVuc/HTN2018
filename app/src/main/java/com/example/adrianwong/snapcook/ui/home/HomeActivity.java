@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.adrianwong.snapcook.MyApplication;
 import com.example.adrianwong.snapcook.R;
 import com.example.adrianwong.snapcook.ui.camera.CameraActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,7 +17,7 @@ import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity implements HomeView{
 
-    private HomePresenter homePresenter;
+    @Inject HomePresenter homePresenter;
     @BindView(R.id.snap_button) Button snapButton;
 
     @Override
@@ -22,9 +25,10 @@ public class HomeActivity extends AppCompatActivity implements HomeView{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        homePresenter = new HomePresenter();
-        homePresenter.attachView(this);
         ButterKnife.bind(this);
+        MyApplication.getApp().getAppComponent().inject(this);
+
+        homePresenter.attachView(this);
     }
 
     @OnClick(R.id.snap_button)

@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 
 import com.example.adrianwong.snapcook.R;
 
+import javax.inject.Inject;
+
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItemViewHolder> {
 
+    @Inject
     public RecipeAdapter() {
 
     }
