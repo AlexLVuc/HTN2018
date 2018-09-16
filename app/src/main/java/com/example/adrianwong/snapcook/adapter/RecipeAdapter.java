@@ -28,9 +28,10 @@ import butterknife.ButterKnife;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItemViewHolder> {
 
     private List<Recipe> mRecipeList;
-    private RecipeActivity context;
+    private Context context;
 
-    public RecipeAdapter(RecipeActivity context) {
+    @Inject
+    public RecipeAdapter(Context context) {
         mRecipeList = new ArrayList<>();
         this.context = context;
     }

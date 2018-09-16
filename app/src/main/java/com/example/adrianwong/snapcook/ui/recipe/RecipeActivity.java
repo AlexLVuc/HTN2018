@@ -40,7 +40,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
         ButterKnife.bind(this);
         MyApplication.getApp().getAppComponent().inject(this);
 
-        recipeAdapter = new RecipeAdapter(this);
         recipePresenter.attachView(this);
 
         Intent intent = getIntent();
