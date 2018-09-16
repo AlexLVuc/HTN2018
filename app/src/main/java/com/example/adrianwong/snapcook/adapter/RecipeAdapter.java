@@ -42,10 +42,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
         int missedIngredientCount = recipe.getMissedIngredientCount();
         int likes = recipe.getLikes();
 
-        holder.mNoteTitleTv.setText(noteTitle);
-        holder.mNoteBodyTv.setText(noteBody);
-        holder.mPriorityView.setBackgroundColor(getPriorityColour(priority));
-        holder.mDateTv.setText(updatedAt);
+//        holder.mNoteTitleTv.setText(noteTitle);
+//        holder.mNoteBodyTv.setText(noteBody);
+//        holder.mPriorityView.setBackgroundColor(getPriorityColour(priority));
+//        holder.mDateTv.setText(updatedAt);
+
     }
 
     @Override
