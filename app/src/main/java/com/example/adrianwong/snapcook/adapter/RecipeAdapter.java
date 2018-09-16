@@ -2,6 +2,7 @@ package com.example.adrianwong.snapcook.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.adrianwong.snapcook.R;
 import com.example.adrianwong.snapcook.model.Recipe;
+import com.example.adrianwong.snapcook.ui.recipe.RecipeActivity;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -25,10 +28,11 @@ import butterknife.ButterKnife;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItemViewHolder> {
 
     private List<Recipe> mRecipeList;
+    private RecipeActivity context;
 
-    @Inject
-    public RecipeAdapter() {
+    public RecipeAdapter(RecipeActivity context) {
         mRecipeList = new ArrayList<>();
+        this.context = context;
     }
 
     @NonNull
@@ -51,11 +55,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
         holder.recipeTitle.setText(title);
         holder.missingIngredientText.setText(usedIngredientCount + " used, " + missedIngredientCount + " missing");
         holder.likesCountText.setText(String.valueOf(likes));
-//        holder.mNoteTitleTv.setText(noteTitle);
-//        holder.mNoteBodyTv.setText(noteBody);
-//        holder.mPriorityView.setBackgroundColor(getPriorityColour(priority));
-//        holder.mDateTv.setText(updatedAt);
-
+        Picasso.with(context).load(imageUrl).into(holder.recipeImage);
     }
 
     public List<Recipe> getRecipeList() {
