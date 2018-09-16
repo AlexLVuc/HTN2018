@@ -2,36 +2,58 @@ package com.example.adrianwong.snapcook.ui.camera;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adrianwong.snapcook.MyApplication;
 import com.example.adrianwong.snapcook.R;
+import com.google.android.gms.common.util.CrashUtils;
 import com.ibm.watson.developer_cloud.android.library.camera.CameraHelper;
+import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.ibm.watson.developer_cloud.visual_recognition.v3.VisualRecognition;
-import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyImagesOptions;
-import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ImageClassification;
-import com.ibm.watson.developer_cloud.visual_recognition.v3.model.VisualClassification;
-import com.ibm.watson.developer_cloud.visual_recognition.v3.model.VisualClassifier;
+import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassResult;
+import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifiedImages;
+import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyOptions;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CameraActivity extends AppCompatActivity implements CameraView {
 
-    private VisualRecognition vrClient;
     private CameraHelper helper;
 
-    @BindView(R.id.search_recipe_button) Button searchRecipeButton;
-    @BindView(R.id.imageView) ImageView imageHolder;
+    @BindView(R.id.search_recipe_button)
+    Button searchRecipeButton;
+
+    @BindView(R.id.imageView)
+    ImageView imageHolder;
+
+    Bitmap photo = null;
+
+    File photoFile = null;
+
+    Single<ClassifiedImages> observable;
+
+    VisualRecognition visualRecognition;
+
+    ClassifyOptions classifyOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +63,33 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
         MyApplication.getApp().getAppComponent().inject(this);
         ButterKnife.bind(this);
 
-        vrClient = new VisualRecognition(
-                VisualRecognition.VERSION_DATE_2016_05_20,
-                getString(R.string.api_key)
-        );
+        initViews();
+
+        observable = Single.create(new SingleOnSubscribe<ClassifiedImages>() {
+            @Override
+            public void subscribe(SingleEmitter<ClassifiedImages> emitter) throws Exception {
+                IamOptions options = new IamOptions.Builder()
+                        .apiKey(getString(R.string.api_key))
+                        .build();
+
+                visualRecognition = new VisualRecognition("2018-03-19", options);
+                classifyOptions = new ClassifyOptions.Builder()
+                        .imagesFile(photoFile)
+                        .classifierIds(Collections.singletonList("Ingredients_1267642770"))
+                        .owners(Collections.singletonList("me"))
+                        .build();
+
+                Log.d("CameraActivity", "photo: " + photoFile.getName());
+
+                ClassifiedImages classifiedImages = visualRecognition.classify(classifyOptions).execute();
+                emitter.onSuccess(classifiedImages);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
         // Initialize camera helper
         helper = new CameraHelper(this);
         helper.dispatchTakePictureIntent();
-    }
-
-    @OnClick(R.id.search_recipe_button)
-    public void onSearchRecipeButton() {
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
     }
 
     // Get the bitmap and image path onActivityResult of an activity or fragment
@@ -61,42 +97,40 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CameraHelper.REQUEST_IMAGE_CAPTURE) {
-            final Bitmap photo = helper.getBitmap(resultCode);
-            final File photoFile = helper.getFile(resultCode);
-            imageHolder.setImageBitmap(photo);
-
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    VisualClassification response =
-                            vrClient.classify(
-                                    new ClassifyImagesOptions.Builder()
-                                            .images(photoFile)
-                                            .build()
-                            ).execute();
-
-                    ImageClassification classification = response.getImages().get(0);
-                    VisualClassifier classifier = classification.getClassifiers().get(0);
-
-                    final StringBuffer output = new StringBuffer();
-                    for(VisualClassifier.VisualClass object: classifier.getClasses()) {
-                        if(object.getScore() > 0.7f)
-                            output.append("<").append(object.getName()).append("> ");
-                    }
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(CameraActivity.this, output, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-        }
-
+        Bitmap photo = helper.getBitmap(resultCode);
+        photoFile = helper.getFile(resultCode);
+        imageHolder.setImageBitmap(photo);
     }
 
+    private void initViews() {
+        searchRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CameraActivity.this, "Hello", Toast.LENGTH_SHORT).show();
+                observable.subscribe(new SingleObserver<ClassifiedImages>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d("CameraActivity", "hello");
+                    }
+
+                    @Override
+                    public void onSuccess(ClassifiedImages classifiedImages) {
+                        List<ClassResult> resultList = classifiedImages.getImages().get(0).getClassifiers().get(0).getClasses();
+                        Log.d("CameraActivity", "size: " + resultList.size());
+                        for (ClassResult classResult : resultList) {
+                            Log.d("CameraActivity", classResult.getClassName());
+                        }
+                        Toast.makeText(CameraActivity.this, "Done", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("CameraActivity", e.getLocalizedMessage());
+                    }
+                });
+            }
+        });
+    }
 
 
     @Override
