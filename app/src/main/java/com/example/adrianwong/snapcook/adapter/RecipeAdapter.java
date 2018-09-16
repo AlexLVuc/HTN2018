@@ -55,7 +55,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
 
         holder.recipeTitle.setText(title);
         holder.missingIngredientText.setText(usedIngredientCount + " used, " + missedIngredientCount + " missing");
-        holder.likesCountText.setText(likes);
+        holder.likesCountText.setText(String.valueOf(likes));
         Picasso.with(context).load(imageUrl).into(holder.recipeImage);
     }
 
