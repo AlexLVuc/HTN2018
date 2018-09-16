@@ -78,6 +78,7 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
                 visualRecognition = new VisualRecognition("2018-03-19", options);
                 classifyOptions = new ClassifyOptions.Builder()
                         .imagesFile(photoFile)
+                        .threshold((float) 0.1)
                         .classifierIds(Collections.singletonList("Ingredients_1267642770"))
                         .owners(Collections.singletonList("me"))
                         .build();
@@ -109,7 +110,6 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
         searchRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CameraActivity.this, "Hello", Toast.LENGTH_SHORT).show();
                 observable.subscribe(new SingleObserver<ClassifiedImages>() {
                     @Override
                     public void onSubscribe(Disposable d) {
