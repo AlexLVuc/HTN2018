@@ -31,7 +31,7 @@ public class SnapcookRestAdapter {
 
         // FIND RECIPES BASED ON INGREDIENTS
         @GET("/findByIngredients")
-        Observable<List<Recipe>> getRecipeList(@Header("X_Mashape_Keyheaders") String key,
+        Observable<List<Recipe>> getRecipeList(@Header("X-Mashape-Key") String key,
                                                @Header("Accept") String accept,
                                                @Query("ingredients") String ingredients,
                                                @Query("number") int number,
@@ -39,7 +39,7 @@ public class SnapcookRestAdapter {
 
         // RETRIEVE THE ACTUAL RECIPE INSTRUCTIONS
         @GET("/analyzedInstructions")
-        Observable<RecipeInstructions> getRecipeInstructions(@Header("X_Mashape_Keyheaders") String key,
+        Observable<RecipeInstructions> getRecipeInstructions(@Header("X-Mashape-Key") String key,
                                                                    @Header("Accept") String accept,
                                                                    @Path("id") int id);
 
