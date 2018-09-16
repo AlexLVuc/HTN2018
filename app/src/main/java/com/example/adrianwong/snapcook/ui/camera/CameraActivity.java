@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.adrianwong.snapcook.MyApplication;
@@ -43,6 +44,9 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
 
     @BindView(R.id.imageView)
     ImageView imageHolder;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
     Bitmap photo = null;
 
@@ -109,7 +113,7 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
                 observable.subscribe(new SingleObserver<ClassifiedImages>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Log.d("CameraActivity", "hello");
+                        progressBar.setVisibility(View.VISIBLE);
                     }
 
                     @Override
@@ -125,6 +129,7 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
                         Intent intent = new Intent (CameraActivity.this, RecipeActivity.class);
                         intent.putExtra("INGREDIENTS", output.toString());
 
+                        progressBar.setVisibility(View.GONE);
                         startActivity(intent);
                     }
 

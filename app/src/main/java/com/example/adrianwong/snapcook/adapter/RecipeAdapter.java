@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adrianwong.snapcook.R;
 import com.example.adrianwong.snapcook.model.Recipe;
@@ -110,6 +111,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
             if (mListInteractionListener != null){
                 int elementId = mRecipeList.get(getAdapterPosition()).getId();
                 mListInteractionListener.onListClick(elementId);
+                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
             }
         }
     }
