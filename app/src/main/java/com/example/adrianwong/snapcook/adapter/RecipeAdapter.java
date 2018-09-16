@@ -46,6 +46,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
 //        holder.mNoteBodyTv.setText(noteBody);
 //        holder.mPriorityView.setBackgroundColor(getPriorityColour(priority));
 //        holder.mDateTv.setText(updatedAt);
+
     }
 
     @Override
