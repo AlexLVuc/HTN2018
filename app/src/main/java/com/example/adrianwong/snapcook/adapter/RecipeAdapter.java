@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
     }
 
     public interface InteractionListener {
-        void onListClick(int id);
+        void onListClick(Recipe recipe);
     }
 
     public void setListInteractionListener(InteractionListener interactionListener) {
@@ -104,14 +105,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
         public RecipeItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (mListInteractionListener != null){
-                int elementId = mRecipeList.get(getAdapterPosition()).getId();
-                mListInteractionListener.onListClick(elementId);
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                Recipe recipe = mRecipeList.get(getAdapterPosition());
+                Log.d("recipeadapter", recipe.getTitle());
+                mListInteractionListener.onListClick(recipe);
             }
         }
     }

@@ -38,8 +38,8 @@ public class SnapcookRestAdapter {
                                                @Query("ranking") int ranking);
 
         // RETRIEVE THE ACTUAL RECIPE INSTRUCTIONS
-        @GET("analyzedInstructions")
-        Observable<RecipeInstructions> getRecipeInstructions(@Header("X-Mashape-Key") String key,
+        @GET("{id}/analyzedInstructions")
+        Observable<List<RecipeInstructions>> getRecipeInstructions(@Header("X-Mashape-Key") String key,
                                                                    @Header("Accept") String accept,
                                                                    @Path("id") int id);
 
@@ -49,7 +49,7 @@ public class SnapcookRestAdapter {
         return snapcookService.getRecipeList(key, accept, ingredients, number, ranking);
     }
 
-    public Observable<RecipeInstructions> getRecipeInstructions(String key, String accept, int id) {
+    public Observable<List<RecipeInstructions>> getRecipeInstructions(String key, String accept, int id) {
         return snapcookService.getRecipeInstructions(key, accept, id);
     }
 }

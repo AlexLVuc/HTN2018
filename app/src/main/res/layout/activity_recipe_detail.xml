@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,35 +10,28 @@
         android:id="@+id/recipe_detail_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/colorPrimary" />
 
     <ImageView
         android:id="@+id/recipe_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recipe_detail_toolbar" />
+        android:layout_below="@id/recipe_detail_toolbar"/>
 
     <TextView
         android:id="@+id/ingredient_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:text="ingredients"
-        app:layout_constraintTop_toBottomOf="@id/recipe_image"/>
-
-    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ingredient_text">
+        android:maxLines="2"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/recipe_image"/>
 
-        <TextView
-            android:id="@+id/recipe_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Step 1..."/>
-    </ScrollView>
+    <TextView
+        android:padding="16dp"
+        android:id="@+id/recipe_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ingredient_text"
+        android:scrollbars="vertical" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

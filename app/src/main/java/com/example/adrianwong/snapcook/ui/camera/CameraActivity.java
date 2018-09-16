@@ -123,7 +123,7 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
                         StringBuffer output = new StringBuffer();
 
                         for (ClassResult classResult : resultList) {
-                            output.append(classResult.getClassName());
+                            output.append(classResult.getClassName()).append(", ");
                         }
 
                         Intent intent = new Intent (CameraActivity.this, RecipeActivity.class);

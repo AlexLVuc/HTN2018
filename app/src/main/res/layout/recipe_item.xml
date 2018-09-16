@@ -27,6 +27,7 @@
             app:srcCompat="@android:color/darker_gray" />
 
         <TextView
+            android:ellipsize="end"
             android:id="@+id/recipe_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
             app:layout_constraintTop_toBottomOf="@+id/media_image" />
 
         <TextView
+            android:ellipsize="end"
             android:id="@+id/missing_ingredient_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

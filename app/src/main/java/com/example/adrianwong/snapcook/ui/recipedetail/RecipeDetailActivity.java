@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,8 +41,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeVie
 
     private int recipeId;
 
-
-    RecipeDetailPresenter recipeDetailPresenter;
+    @Inject RecipeDetailPresenter recipeDetailPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +55,19 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeVie
         imageUrl = intent.getStringExtra("IMAGE_URL");
         recipeId = intent.getIntExtra("RECIPE_ID", -1);
 
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
         toolbar.setVisibility(View.VISIBLE);
+        recipeText.setMovementMethod(new ScrollingMovementMethod());
 
         recipeDetailPresenter.attachView(this);
+        fetchRequests();
+    }
+
+    private void fetchRequests() {
+        Log.d("inside", "fetching request");
+
         recipeDetailPresenter.getRecipeInfo(recipeId);
     }
 
@@ -67,5 +76,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeVie
         Picasso.with(this).load(imageUrl).into(imageHolder);
         ingredientText.setText(ingredients);
         recipeText.setText(instructions);
+
+
     }
 }
