@@ -4,11 +4,6 @@ import com.squareup.moshi.Json;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class RecipeInstructions {
 
     @Json(name = "name")
@@ -17,4 +12,25 @@ public class RecipeInstructions {
     @Json(name = "steps")
     private List<Step> stepList;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Step> getStepList() {
+        return stepList;
+    }
+
+    public void setStepList(List<Step> stepList) {
+        this.stepList = stepList;
+    }
+
+    public RecipeInstructions(String name, List<Step> stepList) {
+
+        this.name = name;
+        this.stepList = stepList;
+    }
 }

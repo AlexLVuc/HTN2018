@@ -21,9 +21,9 @@ public class RecipePresenter extends BasePresenter<RecipeActivity> {
     private CompositeDisposable disposable;
 
     @Inject
-    public RecipePresenter(SnapcookRestAdapter snapcookRestAdapter, CompositeDisposable disposable, RecipeAdapter recipeAdapter) {
+    public RecipePresenter(SnapcookRestAdapter snapcookRestAdapter, RecipeAdapter recipeAdapter) {
         this.snapcookRestAdapter = snapcookRestAdapter;
-        this.disposable = disposable;
+        this.disposable = new CompositeDisposable();
         this.recipeAdapter = recipeAdapter;
     }
 
@@ -34,7 +34,7 @@ public class RecipePresenter extends BasePresenter<RecipeActivity> {
                 .subscribeWith(new DisposableObserver<List<Recipe>>() {
                     @Override
                     public void onNext(List<Recipe> recipes) {
-                        recipeAdapter.set
+                        //recipeAdapter.set
                     }
 
                     @Override

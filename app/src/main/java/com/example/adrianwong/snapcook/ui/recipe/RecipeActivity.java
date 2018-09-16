@@ -1,11 +1,13 @@
 package com.example.adrianwong.snapcook.ui.recipe;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.example.adrianwong.snapcook.MyApplication;
 import com.example.adrianwong.snapcook.R;
@@ -32,6 +34,10 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
         MyApplication.getApp().getAppComponent().inject(this);
 
         recipePresenter.attachView(this);
+
+        Intent intent = getIntent();
+        String ingredients = intent.getStringExtra("INGREDIENTS");
+        Log.d("RecipeActivity", ingredients);
 
         setupGui();
     }

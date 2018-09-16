@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.adrianwong.snapcook.MyApplication;
 import com.example.adrianwong.snapcook.R;
-import com.google.android.gms.common.util.CrashUtils;
+import com.example.adrianwong.snapcook.ui.recipe.RecipeActivity;
 import com.ibm.watson.developer_cloud.android.library.camera.CameraHelper;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.ibm.watson.developer_cloud.visual_recognition.v3.VisualRecognition;
@@ -26,7 +26,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
@@ -116,11 +115,17 @@ public class CameraActivity extends AppCompatActivity implements CameraView {
                     @Override
                     public void onSuccess(ClassifiedImages classifiedImages) {
                         List<ClassResult> resultList = classifiedImages.getImages().get(0).getClassifiers().get(0).getClasses();
-                        Log.d("CameraActivity", "size: " + resultList.size());
+
+                        StringBuffer output = new StringBuffer();
+
                         for (ClassResult classResult : resultList) {
-                            Log.d("CameraActivity", classResult.getClassName());
+                            output.append(classResult.getClassName()).append(',');
                         }
-                        Toast.makeText(CameraActivity.this, "Done", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent (CameraActivity.this, RecipeActivity.class);
+                        intent.putExtra("INGREDIENTS", output.toString());
+
+                        startActivity(intent);
                     }
 
                     @Override
