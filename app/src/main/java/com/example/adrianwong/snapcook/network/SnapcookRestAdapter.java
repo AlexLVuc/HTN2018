@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.Retrofit;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
@@ -15,7 +16,13 @@ import retrofit2.http.QueryMap;
 
 public class SnapcookRestAdapter {
 
-    private interface SnapcookService {
+    private final SnapcookService snapcookService;
+
+    public SnapcookRestAdapter(Retrofit retrofit) {
+        this.snapcookService = retrofit.create(SnapcookService.class);
+    }
+
+    public interface SnapcookService {
 
         @GET("/findByIngredients")
         Observable<List<Recipe>> getRecipeList(@HeaderMap Map<String, String> headers,
