@@ -2,6 +2,7 @@ package com.example.adrianwong.snapcook.ui.recipe;
 
 import com.example.adrianwong.snapcook.adapter.RecipeAdapter;
 import com.example.adrianwong.snapcook.model.Recipe;
+import com.example.adrianwong.snapcook.network.RestConstants;
 import com.example.adrianwong.snapcook.network.SnapcookRestAdapter;
 import com.example.adrianwong.snapcook.ui.base.BasePresenter;
 
@@ -27,8 +28,8 @@ public class RecipePresenter extends BasePresenter<RecipeActivity> {
         this.recipeAdapter = recipeAdapter;
     }
 
-    public void getRecipeList(String key, String accept, String ingredients, int number, int ranking) {
-        disposable.add(snapcookRestAdapter.getRecipeList(key, accept, ingredients, number, ranking)
+    public void getRecipeList(String ingredients) {
+        disposable.add(snapcookRestAdapter.getRecipeList(RestConstants.X_MASHAPE_KEY, RestConstants.ACCEPT, ingredients, 10, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<List<Recipe>>() {
@@ -47,6 +48,10 @@ public class RecipePresenter extends BasePresenter<RecipeActivity> {
 
                     }
                 }));
+    }
+
+    public void onDestroy() {
+        disposable.dispose();
     }
 
 }

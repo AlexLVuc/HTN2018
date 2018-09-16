@@ -15,6 +15,7 @@ import com.example.adrianwong.snapcook.R;
 import com.example.adrianwong.snapcook.adapter.RecipeAdapter;
 import com.example.adrianwong.snapcook.model.Recipe;
 import com.example.adrianwong.snapcook.network.RestConstants;
+import com.example.adrianwong.snapcook.ui.recipedetail.RecipeDetailActivity;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeActivity extends AppCompatActivity implements RecipeView {
+public class RecipeActivity extends AppCompatActivity implements RecipeView, RecipeAdapter.InteractionListener {
 
     @BindView(R.id.recipe_toolbar) Toolbar toolbar;
     @BindView(R.id.recipe_recycler_view) RecyclerView recyclerView;
@@ -32,6 +33,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
     @Inject RecipeAdapter recipeAdapter;
 
     String ingredients;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,14 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
     }
 
     private void fetchRequests() {
-        recipePresenter.getRecipeList(RestConstants.X_MASHAPE_KEY, RestConstants.ACCEPT, ingredients, 10, 1);
+        recipePresenter.getRecipeList(ingredients);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recipePresenter.onDestroy();
+        recipePresenter.detachView();
     }
 
     private void setupGui() {
@@ -62,6 +71,7 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recipeAdapter);
+        recipeAdapter.setListInteractionListener(this);
     }
 
     @Override
@@ -69,5 +79,18 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
         recipeAdapter.setRecipeList(recipes);
         recipeAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(recipeAdapter);
+    }
+
+    @Override
+    public void onListClick(int recipeId) {
+        Recipe recipe = recipeAdapter.getRecipe(recipeId);
+        String title = recipe.getTitle();
+        String imageUrl = recipe.getImageUrl();
+
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra("RECIPE_TITLE", title);
+        intent.putExtra("IMAGE_URL", imageUrl);
+
+        startActivity(intent);
     }
 }

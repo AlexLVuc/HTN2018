@@ -29,11 +29,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
 
     private List<Recipe> mRecipeList;
     private Context context;
+    private InteractionListener mListInteractionListener;
 
     @Inject
     public RecipeAdapter(Context context) {
         mRecipeList = new ArrayList<>();
         this.context = context;
+        mListInteractionListener = null;
     }
 
     @NonNull
@@ -63,6 +65,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
         return mRecipeList;
     }
 
+    public Recipe getRecipe (int id) {
+        return mRecipeList.get(id);
+    }
+
     public void setRecipeList(List<Recipe> recipeList) {
         mRecipeList = recipeList;
         notifyDataSetChanged();
@@ -73,7 +79,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
         return mRecipeList.size();
     }
 
-    public class RecipeItemViewHolder extends RecyclerView.ViewHolder {
+    public interface InteractionListener {
+        void onListClick(int noteId);
+    }
+
+    public void setListInteractionListener(InteractionListener interactionListener) {
+        mListInteractionListener = interactionListener;
+    }
+
+    public class RecipeItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.media_image)
         ImageView recipeImage;
 
@@ -89,6 +103,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
         public RecipeItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mListInteractionListener != null){
+                int elementId = mRecipeList.get(getAdapterPosition()).getId();
+                mListInteractionListener.onListClick(elementId);
+            }
         }
     }
 }
