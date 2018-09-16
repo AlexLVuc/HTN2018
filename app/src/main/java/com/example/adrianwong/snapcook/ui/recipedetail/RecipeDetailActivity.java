@@ -33,9 +33,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeVie
     @BindView(R.id.recipe_text)
     TextView recipeText;
 
-    String title;
+    private String title;
 
-    String imageUrl;
+    private String imageUrl;
+
+    private int recipeId;
+
 
     RecipeDetailPresenter recipeDetailPresenter;
 
@@ -49,12 +52,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeVie
         Intent intent = getIntent();
         title = intent.getStringExtra("RECIPE_TITLE");
         imageUrl = intent.getStringExtra("IMAGE_URL");
+        recipeId = intent.getIntExtra("RECIPE_ID", -1);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
         toolbar.setVisibility(View.VISIBLE);
 
         recipeDetailPresenter.attachView(this);
+        recipeDetailPresenter.getRecipeInfo(recipeId);
     }
 
     @Override

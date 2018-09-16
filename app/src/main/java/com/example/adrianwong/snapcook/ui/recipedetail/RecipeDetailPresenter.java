@@ -27,8 +27,8 @@ public class RecipeDetailPresenter extends BasePresenter<RecipeDetailActivity> {
         this.disposable = new CompositeDisposable();
     }
 
-    public void getRecipeInfo() {
-        disposable.add(restAdapter.getRecipeInstructions(RestConstants.X_MASHAPE_KEY, RestConstants.ACCEPT, 2)
+    public void getRecipeInfo(int recipeId) {
+        disposable.add(restAdapter.getRecipeInstructions(RestConstants.X_MASHAPE_KEY, RestConstants.ACCEPT, recipeId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(new DisposableObserver<RecipeInstructions>() {

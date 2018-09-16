@@ -82,14 +82,16 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView, Rec
     }
 
     @Override
-    public void onListClick(int recipeId) {
-        Recipe recipe = recipeAdapter.getRecipe(recipeId);
+    public void onListClick(int id) {
+        Recipe recipe = recipeAdapter.getRecipe(id);
         String title = recipe.getTitle();
         String imageUrl = recipe.getImageUrl();
+        int recipeId = recipe.getId();
 
         Intent intent = new Intent(this, RecipeDetailActivity.class);
         intent.putExtra("RECIPE_TITLE", title);
         intent.putExtra("IMAGE_URL", imageUrl);
+        intent.putExtra("RECIPE_ID", recipeId);
 
         startActivity(intent);
     }

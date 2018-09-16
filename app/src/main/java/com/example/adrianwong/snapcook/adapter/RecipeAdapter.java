@@ -80,7 +80,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
     }
 
     public interface InteractionListener {
-        void onListClick(int noteId);
+        void onListClick(int id);
     }
 
     public void setListInteractionListener(InteractionListener interactionListener) {
