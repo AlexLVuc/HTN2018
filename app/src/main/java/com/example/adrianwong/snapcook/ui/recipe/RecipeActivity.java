@@ -62,9 +62,6 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recipeAdapter);
-
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
-        recyclerView.addItemDecoration(itemDecoration);
     }
 
     @Override
