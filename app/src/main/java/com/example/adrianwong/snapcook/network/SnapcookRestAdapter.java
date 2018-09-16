@@ -33,25 +33,23 @@ public class SnapcookRestAdapter {
         @GET("/findByIngredients")
         Observable<List<Recipe>> getRecipeList(@Header("X_Mashape_Keyheaders") String key,
                                                @Header("Accept") String accept,
-                                               @Query("fillIngredients") boolean fillIngredients,
                                                @Query("ingredients") String ingredients,
-                                               @Query("limitLicense") boolean limitLicense,
                                                @Query("number") int number,
                                                @Query("ranking") int ranking);
 
         // RETRIEVE THE ACTUAL RECIPE INSTRUCTIONS
         @GET("/analyzedInstructions")
-        Observable<List<RecipeInstructions>> getRecipeInstructions(@Header("X_Mashape_Keyheaders") String key,
+        Observable<RecipeInstructions> getRecipeInstructions(@Header("X_Mashape_Keyheaders") String key,
                                                                    @Header("Accept") String accept,
                                                                    @Path("id") int id);
 
     }
 
-    public Observable<List<Recipe>> getRecipeList(String key, String accept, boolean fillIngredients, String ingredients, boolean limitLicense, int number, int ranking) {
-        return snapcookService.getRecipeList(key, accept, fillIngredients, ingredients, limitLicense, number, ranking);
+    public Observable<List<Recipe>> getRecipeList(String key, String accept, String ingredients, int number, int ranking) {
+        return snapcookService.getRecipeList(key, accept, ingredients, number, ranking);
     }
 
-    public Observable<List<RecipeInstructions>> getRecipeInstructions(String key, String accept, int id) {
+    public Observable<RecipeInstructions> getRecipeInstructions(String key, String accept, int id) {
         return snapcookService.getRecipeInstructions(key, accept, id);
     }
 }
