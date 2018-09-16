@@ -50,7 +50,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
 
         holder.recipeTitle.setText(title);
         holder.missingIngredientText.setText(usedIngredientCount + " used, " + missedIngredientCount + " missing");
-        holder.likesCountText.setText(likes);
+        holder.likesCountText.setText(String.valueOf(likes));
 //        holder.mNoteTitleTv.setText(noteTitle);
 //        holder.mNoteBodyTv.setText(noteBody);
 //        holder.mPriorityView.setBackgroundColor(getPriorityColour(priority));
