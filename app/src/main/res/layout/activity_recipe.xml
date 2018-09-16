@@ -10,6 +10,8 @@
         android:background="@color/colorPrimary"
         android:id="@+id/recipe_toolbar"
         android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recipe_recycler_view"
         android:layout_height="?attr/actionBarSize" />
 
     <android.support.v7.widget.RecyclerView
