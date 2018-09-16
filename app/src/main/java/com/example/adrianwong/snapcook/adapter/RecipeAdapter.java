@@ -42,13 +42,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeItem
     public void onBindViewHolder(@NonNull RecipeItemViewHolder holder, int position) {
         Recipe recipe = mRecipeList.get(position);
 
-        int id = recipe.getId();
         String title = recipe.getTitle();
         String imageUrl = recipe.getImageUrl();
         int usedIngredientCount = recipe.getUsedIngredientCount();
         int missedIngredientCount = recipe.getMissedIngredientCount();
         int likes = recipe.getLikes();
 
+        holder.recipeTitle.setText(title);
+        holder.missingIngredientText.setText(usedIngredientCount + " used, " + missedIngredientCount + " missing");
+        holder.likesCountText.setText(likes);
 //        holder.mNoteTitleTv.setText(noteTitle);
 //        holder.mNoteBodyTv.setText(noteBody);
 //        holder.mPriorityView.setBackgroundColor(getPriorityColour(priority));

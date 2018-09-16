@@ -34,7 +34,7 @@ public class RecipePresenter extends BasePresenter<RecipeActivity> {
                 .subscribeWith(new DisposableObserver<List<Recipe>>() {
                     @Override
                     public void onNext(List<Recipe> recipes) {
-                        //recipeAdapter.set
+                        mView.updateRecipeList(recipes);
                     }
 
                     @Override

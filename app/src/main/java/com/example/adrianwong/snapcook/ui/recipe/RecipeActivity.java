@@ -12,6 +12,10 @@ import android.util.Log;
 import com.example.adrianwong.snapcook.MyApplication;
 import com.example.adrianwong.snapcook.R;
 import com.example.adrianwong.snapcook.adapter.RecipeAdapter;
+import com.example.adrianwong.snapcook.model.Recipe;
+import com.example.adrianwong.snapcook.network.RestConstants;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,6 +30,8 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
     @Inject RecipePresenter recipePresenter;
     @Inject RecipeAdapter recipeAdapter;
 
+    String ingredients;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +42,15 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
         recipePresenter.attachView(this);
 
         Intent intent = getIntent();
-        String ingredients = intent.getStringExtra("INGREDIENTS");
+        ingredients = intent.getStringExtra("INGREDIENTS");
         Log.d("RecipeActivity", ingredients);
 
         setupGui();
+        fetchRequests();
+    }
+
+    private void fetchRequests() {
+        recipePresenter.getRecipeList(RestConstants.X_MASHAPE_KEY, RestConstants.ACCEPT, ingredients, 10, 1);
     }
 
     private void setupGui() {
@@ -52,5 +63,12 @@ public class RecipeActivity extends AppCompatActivity implements RecipeView {
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(itemDecoration);
+    }
+
+    @Override
+    public void updateRecipeList(List<Recipe> recipes) {
+        recipeAdapter.setRecipeList(recipes);
+        recipeAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(recipeAdapter);
     }
 }
