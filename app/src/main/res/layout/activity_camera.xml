@@ -37,7 +37,7 @@
     tools:context=".ui.camera.CameraActivity">
 
     <Button
-        android:id="@+id/take_picture_button"
+        android:id="@+id/search_recipe_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
@@ -91,7 +91,7 @@
         android:cropToPadding="false"
         android:scaleType="centerCrop"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/take_picture_button"
+        app:layout_constraintBottom_toTopOf="@+id/search_recipe_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

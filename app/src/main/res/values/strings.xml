@@ -2,4 +2,6 @@
     <string name="app_name">Snapcook</string>
     <string name="snap">SNAP</string>
     <string name="search_recipes">SEARCH RECIPES</string>
+
+    <string name="api_key">olABHSL96R3KFe7y6c5Z6UDW69iX9eCvPSkDjUH9YgNU</string>
 </resources>

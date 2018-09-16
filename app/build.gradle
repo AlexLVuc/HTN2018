@@ -66,11 +66,18 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-vision-image-label-model:15.0.0'
 
     // ParaCamera
-    implementation 'com.mindorks:paracamera:0.2.2'
+//    implementation 'com.mindorks:paracamera:0.2.2'
 
     // Lombok
     compileOnly "org.projectlombok:lombok:1.18.2"
     annotationProcessor 'org.projectlombok:lombok:1.18.2'
+
+     // IBM Watson
+    implementation 'com.ibm.watson.developer_cloud:visual-recognition:3.9.1'
+    implementation 'com.ibm.watson.developer_cloud:android-sdk:0.4.3'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
